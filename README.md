@@ -1,4 +1,4 @@
-# !The project is on progress!
+# !The project is in progress!
 This project, is being implemented with Create React App and the usage of The Movie Database API (https://developers.themoviedb.org/3) 
 
 The library that has been used so far is:
