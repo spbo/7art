@@ -1,0 +1,28 @@
+.form * {
+  display: flex;
+  flex-direction: column;
+  margin: 2% auto;
+  width: 60%;
+  background: rgb(228, 228, 228);
+  border-color: transparent;
+}
+
+.form__button {
+  background: rgb(34, 48, 243);
+  border: none;
+  color: white;
+  font-weight: $font-size-large;
+  margin: 4% auto 0;
+  height: 3rem;
+  width: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form__error {
+  color: red;
+  margin: 20px 5px 5px 5px;  
+  font-style: italic;
+  word-wrap: keep-all;
+}

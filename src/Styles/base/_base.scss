@@ -1,0 +1,25 @@
+// __ signifies a parent child such as footer__credits,
+//    which signifies that this is "credits" contained within "footer".
+
+// -- signifies a modifier. So footer--large would be used to say this is a "large" "footer",
+//    which could be a variation on footer used for something like a home page.
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  background: fade-out(rgb(230, 229, 229), .50);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+}
+
+button {
+  cursor: pointer;
+}

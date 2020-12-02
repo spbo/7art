@@ -1,0 +1,34 @@
+.section-container-page2 {
+  display: flex;
+  margin: 4% auto 0;
+  height: 28rem;
+  max-width: 70%;
+}
+
+.section-container-page2-each {
+  background: white;
+  // border: 10px solid fade-out(white, .15);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: keep-all;
+  margin: $m-size;
+  padding: 0 $l-size;
+  font-size: $font-size-small;
+
+  p.title {
+    font-weight: bold;
+  }
+
+  a {
+    background: fade-out(rgb(189, 189, 189), .50);
+  }
+}
+
+.section-container-page2-each:last-child {
+  color: white;
+  background: $dark-grey
+}

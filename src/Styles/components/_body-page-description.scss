@@ -1,0 +1,10 @@
+.body-page-descritpion {
+  display: flex;
+  margin: 2% auto 0;
+  justify-content: center;
+
+  h5 {
+    font-size: $font-size-large;
+    font-weight: bold;
+  }
+}
