@@ -1,16 +1,16 @@
 import React from "react";
 import Form from "./Form";
-import Movies from "./Movies";
+import Now_Playing_Movies  from "./Now_Playing_Movies";
 
 const Dashboard = () => {
   return (
     <div>
       <header>7art</header>
       <div className="search-area">
-        <Form />
+        
       </div>
       <div className="results">
-        <Movies />
+        <Now_Playing_Movies />
       </div>
     </div>
   );

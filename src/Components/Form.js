@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAsync } from "react-async";
-import DisplayFetchedData from "./DisplayFetchedData";
 
 // Get Search
 // https://api.themoviedb.org/3/search/movie?api_key=172194a84f1627f7745c68590173ac55&query=Jack+Reacher
 
-//fetching results for searching query
+// fetch results for searching query
 const loadData = async ({ query, page }) => {
   const queryParam = query ? `&query=${query}` : '';
   const pageParam = page ? `&page=${page}` : '';
@@ -29,7 +28,7 @@ const Form = () => {
   });
 
   const handleInput = (e) => {
-    _.debounce(setText(e.target.value), 200);
+    // _.debounce(setText(e.target.value), 200);
   };
 
   const handleFormSubmition = (e) => {
