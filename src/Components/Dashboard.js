@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "./Form";
+import Search from "./Search";
 import Now_Playing_Movies  from "./Now_Playing_Movies";
 
 const Dashboard = () => {
@@ -7,7 +7,7 @@ const Dashboard = () => {
     <div>
       <header>7art</header>
       <div className="search-area">
-        
+        <Search />
       </div>
       <div className="results">
         <Now_Playing_Movies />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAsync } from "react-async";
 import Movies from "./Movies";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -23,38 +23,43 @@ const fetcNowPlayinghMoviesAndGenres = async ({ page }) => {
   return { nowPlaying, genresList };
 };
 
-let totalMovies = [];
-
 const Now_Playing_Movies = () => {
   let [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
+
   const { data, error, isLoading } = useAsync({
     promiseFn: fetcNowPlayinghMoviesAndGenres,
     page: page,
     watch: page,
   });
 
+  // page up for trigger the next API call with the next page
   const PageUp = () => {
-    setPage(prevPage => prevPage + 1);
+    setPage((page) => ++page);
   };
+
+  // When data changes set the local states
+  useEffect(() => {
+    if (data) {
+      // set genres on the first time. (but maybe you want this in case genres change)
+      if (genres.length === 0) {
+        setGenres(data.genresList.genres);
+      }
+      setMovies((prevMovies) => prevMovies.concat(data.nowPlaying.results));
+    }
+  }, [data]);
 
   if (isLoading) return "Loading...";
   if (error) return `Something went wrong: ${error.message}`;
   if (data) {
-    if (totalMovies.length === 0) {
-      data.nowPlaying.results.forEach(result => totalMovies.push(result))
-    } else if (data.nowPlaying.page >= page) {
-      data.nowPlaying.results.forEach(result => totalMovies.push(result))
-    }
-
     return (
       <div>
-        <button onClick={PageUp}>push</button>
-        {console.log(totalMovies)}
         <InfiniteScroll
-          dataLength={100} //This is important field to render the next data
-          next={() => {}}
-          hasMore={true}
+          dataLength={data.nowPlaying.total_pages} //This is important field to render the next data
+          next={PageUp}
+          hasMore={page == data.nowPlaying.total_pages ? false : true}
+          scrollThreshold={0.9}
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
@@ -62,7 +67,7 @@ const Now_Playing_Movies = () => {
             </p>
           }
         >
-          <Movies movies={totalMovies} genres={data.genresList.genres} />
+          <Movies movies={movies} genres={genres} />
         </InfiniteScroll>
       </div>
     );
@@ -70,5 +75,3 @@ const Now_Playing_Movies = () => {
 };
 
 export default Now_Playing_Movies;
-
-// data.nowPlaying.results.forEach((result) => totalMovies.push(result));

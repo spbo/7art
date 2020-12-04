@@ -1,6 +1,7 @@
 import React from "react";
 
 const Movies = ({ movies, genres }) => {
+  
   return (
     <div className="Movie-List">
       {movies.map((movie) => (
