@@ -3,24 +3,46 @@ import noPreviewImage from "../noPreview.jpg";
 import PopUpModal from "./PopUpModal";
 
 const fetchMovieReviews = async (id) => {
-  const response = await fetch(
+  const [reviewsResponse, videosResponse, similarMoviesResponse] = await Promise.all([
+ fetch(
     `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=172194a84f1627f7745c68590173ac55&language=en-US&page=1`
-  );
+  ),
+  fetch(
+    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=172194a84f1627f7745c68590173ac55&language=en-US`
+    ),
+  fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=172194a84f1627f7745c68590173ac55&language=en-US&page=1`)
+]);
 
-  if (!response.ok) throw new Error(response.statusText);
+  if (!reviewsResponse.ok) throw new Error(reviewsResponse.statusText);
+  if (!videosResponse.ok) throw new Error(videosResponse.statusText);
+  if (!similarMoviesResponse.ok) throw new Error(similarMoviesResponse.statusText);
 
-  return response.json();
+  // return response.json();
+  
+  const reviewsData = await reviewsResponse.json();
+  const videosData = await videosResponse.json();
+  const similarMoviesData = await similarMoviesResponse.json();
+
+  return {
+    reviews: reviewsData,
+    videos: videosData.results,
+    similarMovies: similarMoviesData.results,
+  };
 };
 
 const Movie = ({ movie, genres }) => {
   const [reviews, setReviews] = useState({ id: "", results: [] });
+  const [videos, setVideos] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
   const [modalStatus, setModalStatus] = useState(false);
 
   const handlePopUp = (id) => {
     console.log("Click open");
     fetchMovieReviews(id)
       .then((response) => {
-        setReviews({ id: response.id, results: response.results });
+        setReviews({ id: response.reviews.id, results: response.reviews.results });
+        setVideos(response.videos);
+        setSimilarMovies(response.similarMovies);
         setModalStatus(true);
       })
       .catch((error) => `Something went wrong: ${error.message}`);
@@ -70,6 +92,8 @@ const Movie = ({ movie, genres }) => {
         <PopUpModal
           movie={movie}
           reviews={reviews}
+          videos={videos}
+          similarMovies={similarMovies}
           modalStatus={modalStatus}
           closeModal={closeModal}
         />

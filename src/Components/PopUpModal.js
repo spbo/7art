@@ -8,7 +8,14 @@ import Modal from "react-modal";
 // It is not recommended, but you can opt - out by setting`ariaHideApp={false}`.
 Modal.setAppElement(document.querySelector("#root"));
 
-const PopUpModal = ({ movie, reviews, modalStatus, closeModal }) => (
+const PopUpModal = ({
+  movie,
+  reviews,
+  videos,
+  similarMovies,
+  modalStatus,
+  closeModal,
+}) => (
   <Modal
     isOpen={modalStatus}
     onRequestClose={closeModal}
@@ -29,13 +36,23 @@ const PopUpModal = ({ movie, reviews, modalStatus, closeModal }) => (
         ))
       ) : (
         <p>
-          <i>No reviews</i>
+          <i>No reviews available</i>
         </p>
       )}
     </div>
     <div className="modal__subtitle">
       Videos
-       {}
+      {videos.length > 0 ? (
+        videos.map((video) => (
+          <div key={video.id} className="modal__videos-name">
+            <a href={`https://www.youtube.com/watch?v=${video.key}`}>{video.name}</a>
+          </div>
+        ))
+      ) : (
+        <p>
+          <i>No videos available</i>
+        </p>
+      )}
     </div>
     <button className="button" onClick={closeModal}>
       Okay
