@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import noPreviewImage from "../noPreview.jpg";
 
 // Accessibility when using Modal
 // Warning: react-modal: App element is not defined.
@@ -45,7 +46,9 @@ const PopUpModal = ({
       {videos.length > 0 ? (
         videos.map((video) => (
           <div key={video.id} className="modal__videos-name">
-            <a href={`https://www.youtube.com/watch?v=${video.key}`}>{video.name}</a>
+            <a href={`https://www.youtube.com/watch?v=${video.key}`}>
+              {video.name}
+            </a>
           </div>
         ))
       ) : (
@@ -53,6 +56,22 @@ const PopUpModal = ({
           <i>No videos available</i>
         </p>
       )}
+    </div>
+    <div className="modal__subtitle">
+        Similar Movies
+      {similarMovies.length > 0 ? (similarMovies.map(movie => (<img
+        key={movie.id}
+        className="image"
+        src={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
+            : noPreviewImage
+        }
+        alt={movie.title}
+      />))) : (
+        <p>
+          <i>No Similar Movies available</i>
+        </p>)}
     </div>
     <button className="button" onClick={closeModal}>
       Okay
