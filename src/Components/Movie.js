@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import noPreviewImage from "../noPreview.jpg";
 
 const fetchMovieReviews = async (id) => {
   const response = await fetch(
@@ -14,7 +15,7 @@ const Movie = ({ movie, genres }) => {
   const [reviews, setReviews] = useState({ id: "", results: [] });
   // const [popUpStatus, setPopUpStatus] = useState(false);
 
-  const handleClick = (id, e) => {
+  const handleΠοπΘπ = (id, e) => {
     e.preventDefault();
     console.log("The link was clicked.");
     fetchMovieReviews(id)
@@ -33,7 +34,6 @@ const Movie = ({ movie, genres }) => {
   //   }
   // };
 
-  // onClick={(e) => handleClick(movie.id, e)}
   return (
     <div className="">
       <div
@@ -43,7 +43,7 @@ const Movie = ({ movie, genres }) => {
       >
         <img
           className="image"
-          src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`}
+          src={movie.poster_path ? `https://image.tmdb.org/t/p/w154${movie.poster_path}` : noPreviewImage }
           alt={movie.title}
         />
         <div className="otherInfos">

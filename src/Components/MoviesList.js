@@ -45,6 +45,7 @@ const MoviesList = () => {
     watch: `${query}#${page}`,
   });
 
+  //render to the screen what you type
   const handleInput = (e) => {
     // _.debounce(setText(e.target.value), 200);
     setText(e.target.value);
@@ -52,13 +53,26 @@ const MoviesList = () => {
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
+    if (text != query) {
+      // when you send a query the page counter remaining but with this if you search a new query you signal to start from page 1 again
+      setPage(1);
+    }
     setQuery(text);
     setText("");
+    setMovies([]);
   };
 
+  // return to first rendering 
+  const handleReturnButton = () => {
+    if (query.length !== 0 || page !== 1) {
+      setQuery("");
+      setMovies([]);
+      setPage(1);
+    }
+  };
   // page up for trigger the next API call with the next page
   const PageUp = () => {
-    setPage(page+1);
+    setPage(page + 1);
   };
 
   // When data changes set the local states
@@ -69,7 +83,6 @@ const MoviesList = () => {
         setGenres(data.genres);
       }
       setMovies((prevMovies) => prevMovies.concat(data.movies));
-      // setMovies(movies.push(data.movies))
     }
   }, [data]);
 
@@ -89,8 +102,11 @@ const MoviesList = () => {
             />
             <button className="">Search</button>
           </form>
+          {query && <button onClick={handleReturnButton}>
+            Now Playing Movies
+          </button>}
         </div>
-        <h4>Now Playing Movies</h4>
+        <h4>{!query && "Now Playing Movies"}</h4>
         <InfiniteScroll
           dataLength={data.total_pages} //This is important field to render the next data
           next={PageUp}
@@ -113,33 +129,3 @@ const MoviesList = () => {
 };
 
 export default MoviesList;
-
-// <div>
-// <form className="" onSubmit={handleFormSubmition}>
-//   <input
-//     type="text"
-//     placeholder="Search for a movie"
-//     name="search"
-//     value={text}
-//     onChange={(e) => handleInput(e)}
-//   />
-//   <button className="">Search</button>
-// </form>
-// </div>
-// <h4>Now Playing Movies</h4>
-// <InfiniteScroll
-// dataLength={data.nowPlaying.total_pages} //This is important field to render the next data
-// next={PageUp}
-// hasMore={page == data.nowPlaying.total_pages ? false : true}
-// scrollThreshold={0.9}
-// loader={<h4>Loading...</h4>}
-// endMessage={
-//   <p style={{ textAlign: "center" }}>
-//     <b>Yay! You have seen it all</b>
-//   </p>
-// }
-// >
-// {movies.map((movie) => (
-//   <Movie movie={movie} genres={genres} />
-// ))}
-// </InfiniteScroll>
