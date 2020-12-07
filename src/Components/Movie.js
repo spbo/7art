@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import noPreviewImage from "../noPreview.jpg";
+import PopUpModal from "./PopUpModal";
 
 const fetchMovieReviews = async (id) => {
   const response = await fetch(
@@ -13,37 +14,38 @@ const fetchMovieReviews = async (id) => {
 
 const Movie = ({ movie, genres }) => {
   const [reviews, setReviews] = useState({ id: "", results: [] });
-  // const [popUpStatus, setPopUpStatus] = useState(false);
+  const [modalStatus, setModalStatus] = useState(false);
 
-  const handleΠοπΘπ = (id, e) => {
-    e.preventDefault();
-    console.log("The link was clicked.");
+  const handlePopUp = (id) => {
+    console.log("Click open");
     fetchMovieReviews(id)
       .then((response) => {
         setReviews({ id: response.id, results: response.results });
-        // handlePopUpStatus(true);
+        setModalStatus(true);
       })
       .catch((error) => `Something went wrong: ${error.message}`);
   };
 
-  // const handlePopUpStatus = (status) => {
-  //   if (status) {
-  //     setPopUpStatus(true);
-  //   } else {
-  //     setPopUpStatus(false);
-  //   }
-  // };
+  const closeModal = () => {
+    console.log("Click close");
+    console.log("============")
+    setModalStatus(false);
+  };
 
   return (
     <div className="">
       <div
         className="movie"
         key={movie.id}
-        onClick={() => console.log(movie.id)}
+        onClick={() => handlePopUp(movie.id)}
       >
         <img
           className="image"
-          src={movie.poster_path ? `https://image.tmdb.org/t/p/w154${movie.poster_path}` : noPreviewImage }
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
+              : noPreviewImage
+          }
           alt={movie.title}
         />
         <div className="otherInfos">
@@ -65,34 +67,15 @@ const Movie = ({ movie, genres }) => {
           <div>Release Date: {movie.release_date}</div>
           <div>Overview: {movie.overview}</div>
         </div>
-        <div className="overlay">
-          <div className="overlay--after-open popup">
-            {movie.id === reviews.id &&
-              reviews.results.map((result) => <div>{result.author}</div>)}
-            <a className="close__popup" href="#">
-              &times;
-            </a>
-          </div>
-        </div>
+        <PopUpModal
+          movie={movie}
+          reviews={reviews}
+          modalStatus={modalStatus}
+          closeModal={closeModal}
+        />
       </div>
     </div>
   );
 };
 
 export default Movie;
-
-// {popUpStatus ? (
-//   <div className="overlay--after-open popup">
-//     {movie.id === reviews.id &&
-//       reviews.results.map((result) => <div>{result.author}</div>)}
-//     <a
-//       className="close__popup"
-//       href="#"
-//       onclick={handlePopUpStatus(false)}
-//     >
-//       &times;
-//     </a>
-//   </div>
-// ) : (
-//   <div className="overlay--before-close"></div>
-// )}
