@@ -27,10 +27,10 @@ const PopUpModal = ({
   >
     <h3 className="modal__title">More Infos</h3>
     <div className="modal__subtitle">
-      Reviews
+      <h4>Reviews</h4>
       {reviews.results.length > 0 ? (
         reviews.results.map((result, idx) => (
-          <div className="modal__body" key={result.id}>
+          <div className="modal__reviews" key={result.id}>
             {`${idx + 1}. ${result.content}`}
             <i> - by {result.author}</i>
           </div>
@@ -42,7 +42,7 @@ const PopUpModal = ({
       )}
     </div>
     <div className="modal__subtitle">
-      Videos
+      <h4>Videos</h4>
       {videos.length > 0 ? (
         videos.map((video) => (
           <div key={video.id} className="modal__videos-name">
@@ -58,23 +58,30 @@ const PopUpModal = ({
       )}
     </div>
     <div className="modal__subtitle">
-        Similar Movies
-      {similarMovies.length > 0 ? (similarMovies.map(movie => (<img
-        key={movie.id}
-        className="image"
-        src={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
-            : noPreviewImage
-        }
-        alt={movie.title}
-      />))) : (
-        <p>
-          <i>No Similar Movies available</i>
-        </p>)}
+      <h4>Similar Movies</h4>
+      <div className="modal__similarMovies">
+        {similarMovies.length > 0 ? (
+          similarMovies.map((movie) => (
+            <img
+              key={movie.id}
+              className=""
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
+                  : noPreviewImage
+              }
+              alt={movie.title}
+            />
+          ))
+        ) : (
+          <p>
+            <i>No Similar Movies available</i>
+          </p>
+        )}
+      </div>
     </div>
     <button className="button" onClick={closeModal}>
-      Okay
+      Close
     </button>
   </Modal>
 );

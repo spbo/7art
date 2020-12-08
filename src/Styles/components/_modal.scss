@@ -19,23 +19,60 @@
 }
 
 .modal {
-  background: $light-blue;
+  background: $grey-blue;
+  scrollbar-color: #304057 #1d2636;
   color: white;
-  max-width: 100rem;
+  width: 100rem;
   outline: $light-blue;
   padding: $l-size;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   max-height: calc(100vh - 150px);
   overflow-y: auto; 
 }
 
 .modal__title {
+  font-weight: bold;
   margin: 0 0 $m-size 0;
+  display: flex;
+  justify-content: center;
 }
 
-.modal__body {
+.modal__subtitle {
+  margin: 2rem 0;
+  font-weight: lighter;
+}
+
+.modal__videos-name>a {
+ color: $blue;
+}
+
+.modal__reviews {
   font-size: 2rem;
   font-weight: 300;
   margin: 0 0 $l-size 0;
   word-break: break-all;
+}
+
+.modal__similarMovies {
+  border: 2px solid red;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  img {
+    margin: 1rem
+  }
+}
+
+// Close button
+.button {
+  display: flex;
+  justify-content: center;
+  border: none;
+  background: $grey-blue;
+  color: white;
+  font-weight: 500;
+  padding: $s-size;
 }

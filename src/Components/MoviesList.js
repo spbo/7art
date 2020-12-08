@@ -53,16 +53,18 @@ const MoviesList = () => {
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    if (text != query) {
-      // when you send a query the page counter remaining but with this if you search a new query you signal to start from page 1 again
-      setPage(1);
+    if (text) {
+      if (text != query) {
+        // when you send a query the page counter remaining but with this if you search a new query you signal to start from page 1 again
+        setPage(1);
+      }
+      setQuery(text);
+      setText("");
+      setMovies([]);
     }
-    setQuery(text);
-    setText("");
-    setMovies([]);
   };
 
-  // return to first rendering 
+  // return to first rendering
   const handleReturnButton = () => {
     if (query.length !== 0 || page !== 1) {
       setQuery("");
@@ -79,7 +81,7 @@ const MoviesList = () => {
   useEffect(() => {
     if (data) {
       // set genres on the first time. (but maybe you want this in case genres change)
-      if (data.genres.length === 0) {
+      if (genres.length === 0) {
         setGenres(data.genres);
       }
       setMovies((prevMovies) => prevMovies.concat(data.movies));
@@ -91,22 +93,26 @@ const MoviesList = () => {
   if (data) {
     return (
       <div className="content-container">
-        <div>
-          <form className="" onSubmit={handleFormSubmission}>
+        <div className="search-aera">
+          <div className="title">
+            {!query ? (
+              "Now Playing Movies"
+            ) : (
+              <button className="Now-Playing-Movies-button" onClick={handleReturnButton}>Return to Now Playing Movies</button>
+            )}
+          </div>
+          <form onSubmit={handleFormSubmission}>
             <input
               type="text"
               placeholder="Search for a movie"
               name="search"
+              size="50"
               value={text}
               onChange={(e) => handleInput(e)}
             />
-            <button className="">Search</button>
+            <button>Search</button>
           </form>
-          {query && <button onClick={handleReturnButton}>
-            Now Playing Movies
-          </button>}
         </div>
-        <h4>{!query && "Now Playing Movies"}</h4>
         <InfiniteScroll
           dataLength={data.total_pages} //This is important field to render the next data
           next={PageUp}
@@ -129,3 +135,7 @@ const MoviesList = () => {
 };
 
 export default MoviesList;
+
+// {query && (
+//   <button onClick={handleReturnButton}>Now Playing Movies</button>
+// )}
