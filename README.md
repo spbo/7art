@@ -1,13 +1,13 @@
-# !The project is in progress!
-This project, is being implemented with Create React App and the usage of The Movie Database API (https://developers.themoviedb.org/3) 
+This project has been made with Create React App.
 
-The library that has been used so far is:
+The libraries that have been used are:
+
 - React-async
-
-with the intetion of using (but not limited to):
-- React-router-dom
+- React-infinite-scroll-component
+- React-modal
 - Sass (styling)
 
+For the content (texts & images), The Movie Database API (https://developers.themoviedb.org/3) has been used.
 
 
 ### `yarn start`
