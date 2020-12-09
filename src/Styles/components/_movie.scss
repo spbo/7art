@@ -1,18 +1,39 @@
 .movie {
-  border: 2px solid black;
   margin: 0 0 2rem 0;
   display: flex;
-  // justify-content: center;  
+
+  .image {
+    display: flex;
+    width: 17rem;
+    height: inherit;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .otherInfos {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .otherInfos__original-title,
+    .otherInfos__title,
+    .otherInfos__genres,
+    .otherInfos__language,
+    .otherInfos__votes,
+    .otherInfos__voters,
+    .otherInfos__release-date{
+      margin-bottom: 1rem;
+      
+    }
+  }
 }
 
-.image {
+.movie-not-found {
+  font-weight: bold;
+  margin: 20%;
   display: flex;
-}
-
-.otherInfos {
-  border: 2px solid green;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  
+  justify-content: center;
 }

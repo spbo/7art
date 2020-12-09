@@ -84,7 +84,7 @@ const MoviesList = () => {
       if (genres.length === 0) {
         setGenres(data.genres);
       }
-      setMovies((prevMovies) => prevMovies.concat(data.movies));
+      setMovies(() => movies.concat(data.movies));
     }
   }, [data]);
 
@@ -98,44 +98,49 @@ const MoviesList = () => {
             {!query ? (
               "Now Playing Movies"
             ) : (
-              <button className="Now-Playing-Movies-button" onClick={handleReturnButton}>Return to Now Playing Movies</button>
+              <button
+                className="Now-Playing-Movies-button"
+                onClick={handleReturnButton}
+              >
+                Return to Now Playing Movies
+              </button>
             )}
           </div>
           <form onSubmit={handleFormSubmission}>
             <input
               type="text"
-              placeholder="Search for a movie"
+              placeholder="Search for a movie..."
               name="search"
-              size="50"
+              size="30"
               value={text}
               onChange={(e) => handleInput(e)}
             />
             <button>Search</button>
           </form>
         </div>
-        <InfiniteScroll
-          dataLength={data.total_pages} //This is important field to render the next data
-          next={PageUp}
-          hasMore={page == data.total_pages ? false : true}
-          scrollThreshold={0.9}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          {movies.map((movie) => (
-            <Movie key={movie.id} movie={movie} genres={genres} />
-          ))}
-        </InfiniteScroll>
+        {movies.length > 0 ? ( // if movies doesn't found
+          <InfiniteScroll
+            dataLength={data.total_pages} //This is important field to render the next data
+            next={PageUp}
+            hasMore={page === data.total_pages ? false : true}
+            scrollThreshold={0.9}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {movies.map((movie) => (
+              <Movie key={movie.id} movie={movie} genres={genres} />
+            ))}
+          </InfiniteScroll>
+        ) : (
+          <div className="movie-not-found">Movie didn't found.</div>
+        )}
       </div>
     );
   }
 };
 
 export default MoviesList;
-
-// {query && (
-//   <button onClick={handleReturnButton}>Now Playing Movies</button>
-// )}

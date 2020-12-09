@@ -7,13 +7,11 @@
   .title {
     font-weight: bold;
     color: $dark-grey;
-    margin-left: 2rem;
   }
 
   .Now-Playing-Movies-button {
     font-weight: bold;
     background: none;
-    // margin-left: 0.5rem;
     background: lighten($dark-grey, 50%);
     padding: 0.5rem;
   }

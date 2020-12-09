@@ -10,7 +10,6 @@ import noPreviewImage from "../noPreview.jpg";
 Modal.setAppElement(document.querySelector("#root"));
 
 const PopUpModal = ({
-  movie,
   reviews,
   videos,
   similarMovies,
@@ -23,7 +22,6 @@ const PopUpModal = ({
     contentLabel="Pop Up"
     closeTimeoutMS={200}
     className="modal"
-    // appElement={this}
   >
     <h3 className="modal__title">More Infos</h3>
     <div className="modal__subtitle">
@@ -62,16 +60,19 @@ const PopUpModal = ({
       <div className="modal__similarMovies">
         {similarMovies.length > 0 ? (
           similarMovies.map((movie) => (
-            <img
-              key={movie.id}
-              className=""
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
-                  : noPreviewImage
-              }
-              alt={movie.title}
-            />
+            <div>
+              <img
+                key={movie.id}
+                className="modal__similarMovies-pictures"
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
+                    : noPreviewImage
+                }
+                alt={movie.title}
+              />
+              <div className="modal__similarMovies-titles">{movie.title}</div>
+            </div>
           ))
         ) : (
           <p>
@@ -80,14 +81,10 @@ const PopUpModal = ({
         )}
       </div>
     </div>
-    <button className="button" onClick={closeModal}>
+    <button className="modal__button" onClick={closeModal}>
       Close
     </button>
   </Modal>
 );
 
 export default PopUpModal;
-
-// movie.id === reviews.id &&
-
-// {props.selectedOption && <p className="modal__body">{reviews}</p>}
